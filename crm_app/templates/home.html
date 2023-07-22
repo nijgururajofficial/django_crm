@@ -20,15 +20,16 @@
     </thead>
     <tbody>
     {% for record in records %}
-        <tr>
-            <td>{{ record.id }}</th>
+        
+        <tr>    
+            <td><a href="{% url 'record' record.id %}">{{ record.id }}</a></th>
             <td>{{ record.first_name }} {{ record.last_name }}</td>
             <td>{{ record.phone }}</td>
             <td>{{ record.email }}</td>
             <td>{{ record.city }}</td>
             <td>{{ record.state }}</td>
             <td>{{ record.created_at }}</td>
-        </tr> 
+        </tr>
     {% endfor %}
     </tbody>
 </table>
