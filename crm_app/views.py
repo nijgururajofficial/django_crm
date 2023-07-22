@@ -5,7 +5,22 @@ from .forms import SignUpForm
 
 # Create your views here.
 def home(request):
-    return render(request, "home.html", {})
+    # check if user is authenticated
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        # authenticate
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, "You have logged in successfully")
+            return redirect('home')
+        else:
+            messages.success(request, "There was an error logging in. Please try again...")
+            return redirect('home')
+    else:
+        return render(request, "home.html", {})
         
 
 
@@ -29,22 +44,5 @@ def register_user(request):
     else:
         form = SignUpForm
         return render(request, "register.html", {'form':form})
-    
-def login_user(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        
-        # authenticate
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            messages.success(request, "You have logged in successfully")
-            return redirect('home')
-        else:
-            messages.success(request, "There was an error logging in. Please try again...")
-            return redirect('login')
-    else:
-        return render(request, "login.html", {})
     
             
