@@ -16,7 +16,7 @@ def home(request):
         # authenticate
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(  request, user)
+            login(request, user)
             messages.success(request, "You have logged in successfully")
             return redirect('home')
         else:
